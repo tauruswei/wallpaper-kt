@@ -5,6 +5,11 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},{
+			"path": "pages/index/demo9",
+			"style": {
+				"navigationBarTitleText": "趣味鸡"
+			}
 		},
 		{
 			"path" : "pages/demo1/demo1",
@@ -59,6 +64,22 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "demo7",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/demo8/demo8",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo8",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/demo9/demo9",
+			"style" : 
+			{
+				"navigationBarTitleText" : "热梗指南",
 				"enablePullDownRefresh" : false
 			}
 		}
