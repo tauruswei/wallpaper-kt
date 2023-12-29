@@ -12,7 +12,6 @@ import {ref,computed} from "vue";
 const firstName = ref("迈克尔");
 const lastName = ref("乔丹");
 
-
 const fullName = computed(()=> {
 	console.log("计算属性");
 	return firstName.value +"-"+ lastName.value
