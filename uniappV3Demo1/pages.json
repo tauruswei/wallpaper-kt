@@ -90,6 +90,14 @@
 				"navigationBarTitleText" : "demo10",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/demo11/demo11",
+			"style" : 
+			{
+				"navigationBarTitleText" : "watch",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
