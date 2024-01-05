@@ -1,6 +1,6 @@
 # uniapp最新Vue3组合式API版本零基础入门到项目实战
 
-![uniappv3](课程需要的资料\uniappv3.jpg)
+![uniappv3](\课程需要的资料\uniappv3.jpg)
 
 ## 随堂笔记
 
