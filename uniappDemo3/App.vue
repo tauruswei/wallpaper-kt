@@ -1,7 +1,14 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			console.log('App Launch')	
+			uni.setTabBarBadge({
+				index:1,
+				text:13
+			})
+			uni.showTabBarRedDot({
+				index:2
+			})
 		},
 		onShow: function() {
 			console.log('App Show')

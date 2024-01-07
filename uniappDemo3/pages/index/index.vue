@@ -1,22 +1,47 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
+		<navigator open-type="reLaunch" url="/pages/user/user">用户</navigator>
+		<button @click="show">显示</button>
+		<button @click="hide">隐藏</button>
+		<button @click="stop">停止</button>
+		<image class="logo" src="/static/images/xxmLogo.png"></image>
 		<view class="" v-for="item in 100">
 			{{item}}
 		</view>
+		
+		
 	</view>
 </template>
 
 <script setup>
-import {ref,onMounted} from "vue";
-import {onLoad,onReachBottom} from "@dcloudio/uni-app"
+function show(){
+	uni.showToast({
+		title:"加载...",
+		icon:"loading",
+		duration:3000
+	})
+}
+function hide(){
+	uni.hideToast()
+}
+
+function stop(){
+	uni.stopPullDownRefresh()
+}
+
+
 
 const conut = ref(0);
+
 onMounted(()=>{
 	console.log("onMounted函数");
 })
 onLoad(()=>{
 	console.log("onLoad钩子");
+})
+
+onShow(()=>{
+	console.log("onShow钩子");
 })
 onReachBottom(()=>{
 	console.log("到底了");
