@@ -1,6 +1,6 @@
 {
-    "name" : "uniappDemo2",
-    "appid" : "__UNI__C0A8B81",
+    "name" : "uniappDemo3",
+    "appid" : "__UNI__E4FA250",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -50,9 +50,10 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx511abe7a13783591",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "usingComponents" : true
     },
@@ -68,6 +69,8 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "3"
-	
+    "vueVersion" : "3",
+    "h5" : {
+        "title" : "咸虾米壁纸"
+    }
 }

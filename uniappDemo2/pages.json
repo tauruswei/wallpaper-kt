@@ -29,6 +29,38 @@
 				"navigationBarTitleText" : "demo3",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/demo4/demo4",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo4",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/demo5/demo5",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo5",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/demo6/demo6",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo6",
+				"enablePullDownRefresh" : false
+			}
+		},
+		{
+			"path" : "pages/demo7/demo7",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo7",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {

@@ -18,3 +18,6 @@
 
 拓展阅读：[uniappVue3版本中组件生命周期和页面生命周期的详细介绍](https://blog.csdn.net/qq_18798149/article/details/135405378)
 
+### 5.7.安装插件unplugin-auto-import自动导入vue和uniapp模块
+
+使用文档：[开发uniapp使用Vue3组合式API版本，如何实现从vue模块中自动导入](https://blog.csdn.net/qq_18798149/article/details/134321097)
