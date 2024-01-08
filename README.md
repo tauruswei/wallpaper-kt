@@ -21,3 +21,13 @@
 ### 5.7.安装插件unplugin-auto-import自动导入vue和uniapp模块
 
 使用说明：[开发uniapp使用Vue3组合式API版本，如何实现从vue模块中自动导入](https://blog.csdn.net/qq_18798149/article/details/134321097)
+
+### 5.15.uni.request发送网络请求
+
+免费测试api接口：https://jsonplaceholder.typicode.com/
+
+随机猫咪API接口：https://api.thecatapi.com/v1/images/search?limit=1
+
+咸虾米API接口：https://api.qingnian8.com/
+
+NBA球员榜：https://tiyu.baidu.com/api/match/playerranking/match/NBA/tabId/60
