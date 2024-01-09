@@ -46,6 +46,30 @@
 	    		"navigationBarTitleText" : "demo3",
 	    		"enablePullDownRefresh" : false
 	    	}
+	    },
+	    {
+	    	"path" : "pages/demo4/demo4",
+	    	"style" : 
+	    	{
+	    		"navigationBarTitleText" : "request网络请求",
+	    		"enablePullDownRefresh" : false
+	    	}
+	    },
+	    {
+	    	"path" : "pages/demo5/demo5",
+	    	"style" : 
+	    	{
+	    		"navigationBarTitleText" : "request参数",
+	    		"enablePullDownRefresh" : false
+	    	}
+	    },
+	    {
+	    	"path" : "pages/requestDemo/requestDemo",
+	    	"style" : 
+	    	{
+	    		"navigationBarTitleText" : "request综合案例",
+	    		"enablePullDownRefresh" : false
+	    	}
 	    }
 		
 		

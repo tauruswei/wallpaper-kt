@@ -25,15 +25,6 @@ function clear(){
 	uni.clearStorageSync()
 }
 
-uni.request({
-	url:"https://v.api.aa1.cn/api/zhihu-news/index.php?aa1=xiarou",
-	dataType:"json",
-	success:res=>{
-		console.log(res);
-	}
-})
-
-
 
 </script>
 
