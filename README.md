@@ -31,3 +31,10 @@
 咸虾米API接口：https://api.qingnian8.com/
 
 NBA球员榜：https://tiyu.baidu.com/api/match/playerranking/match/NBA/tabId/60
+
+### 6.7.底部安全区域css环境变量
+
+`env(safe-area-inset-bottom)`
+
+
+

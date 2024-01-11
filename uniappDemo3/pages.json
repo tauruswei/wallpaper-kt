@@ -68,7 +68,7 @@
 	    	"style" : 
 	    	{
 	    		"navigationBarTitleText" : "request综合案例",
-	    		"enablePullDownRefresh" : false
+	    		"enablePullDownRefresh" : true
 	    	}
 	    }
 		

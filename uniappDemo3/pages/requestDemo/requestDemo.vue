@@ -15,6 +15,9 @@
 
 <script setup>
 import {ref} from "vue";
+import {onReachBottom,onPullDownRefresh} from "@dcloudio/uni-app"
+
+
 const pets = ref([]); 
 
 const onPreview = function (index){
@@ -29,19 +32,49 @@ const onPreview = function (index){
 
 //发送网络请求
 function network(){
+	uni.showNavigationBarLoading()
 	uni.request({
 		url:"https://tea.qingnian8.com/tools/petShow",
 		data:{
-			size:10
+			size:5
 		},
 		header:{
 			"access-key":"xxm123321@#"
 		}
-	}).then(res=>{
-		console.log(res.data.data);
-		pets.value = res.data.data
+	}).then(res=>{		
+		if(res.data.errCode===0){			
+			pets.value = [...pets.value,...res.data.data]
+			console.log(pets.value);
+		}else if(res.data.errCode === 400){
+			uni.showToast({
+				title:res.data.errMsg,
+				icon:"none"
+			})
+		}		
+	}).catch(err=>{		
+		uni.showToast({
+			title:"请求有误，请重新刷新",
+			icon:"none"
+		})
+	}).finally(()=>{
+		uni.hideNavigationBarLoading();
+		uni.stopPullDownRefresh();
 	})
 }
+
+
+//触底加载更多
+onReachBottom(()=>{
+	network();
+})
+
+//下拉刷新
+onPullDownRefresh(()=>{
+	pets.value = [];
+	network();
+})
+
+
 
 network();
 
