@@ -1,5 +1,5 @@
 <template>
-	<view class="homeLayout">
+	<view class="homeLayout pageBg">
 		<view class="banner">
 			<swiper circular indicator-dots indicator-color="rgba(255,255,255,0.5)" 
 			indicator-active-color="#fff" autoplay>
@@ -17,7 +17,7 @@
 		
 		<view class="notice">
 			<view class="left">
-				<uni-icons type="sound-filled" size="20" color="#28b389"></uni-icons>
+				<uni-icons type="sound-filled" size="20"></uni-icons>
 				<text class="text">公告</text>
 			</view>
 			<view class="center">
@@ -35,7 +35,7 @@
 				<template #name>每日推荐</template>
 				<template #custom>
 					<view class="date">
-						<uni-icons type="calendar" size="18" color="#28b389"></uni-icons>
+						<uni-icons type="calendar" size="18"></uni-icons>
 						<view class="text">
 							<uni-dateformat :date="Date.now()" format="dd日"></uni-dateformat>							
 						</view>						
@@ -108,8 +108,13 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			:deep(){
+				.uni-icons{
+					color:$brand-theme-color !important;
+				}
+			}			
 			.text{
-				color:#28b389;
+				color:$brand-theme-color;
 				font-weight: 600;
 				font-size: 28rpx;
 			}
@@ -139,9 +144,14 @@
 	.select{
 		padding-top:50rpx;
 		.date{
-			color:#28b389;
+			color:$brand-theme-color;
 			display: flex;
 			align-items: center;
+			:deep(){
+				.uni-icons{
+					color:$brand-theme-color !important;
+				}
+			}	
 			.text{
 				margin-left:5rpx;
 			}
