@@ -4,15 +4,9 @@
 		<view class="banner">
 			<swiper circular indicator-dots indicator-color="rgba(255,255,255,0.5)" 
 			indicator-active-color="#fff" autoplay>
-				<swiper-item>
-					<image src="../../common/images/banner1.jpg" mode="aspectFill"></image>
-				</swiper-item>
-				<swiper-item>
-					<image src="../../common/images/banner2.jpg" mode="aspectFill"></image>
-				</swiper-item>
-				<swiper-item>
-					<image src="../../common/images/banner3.jpg" mode="aspectFill"></image>
-				</swiper-item>
+				<swiper-item v-for="item in bannerList" :key="item._id">
+					<image :src="item.picurl" mode="aspectFill"></image>
+				</swiper-item>				
 			</swiper>
 		</view>
 		
@@ -23,9 +17,9 @@
 			</view>
 			<view class="center">
 				<swiper vertical autoplay interval="1500" duration="300" circular>
-					<swiper-item v-for="item in 4">
+					<swiper-item v-for="item in noticeList" :key="item._id">
 						<navigator url="/pages/notice/detail">
-							文字内容文字内容文字内容文字内容文字内容文字内容
+							{{item.title}}
 						</navigator>
 					</swiper-item>
 				</swiper>
@@ -49,8 +43,8 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x>
-					<view class="box" v-for="item in 8" @click="goPreview">					
-						<image src="../../common/images/preview_small.webp" mode="aspectFill"></image>						
+					<view class="box" v-for="item in randomList" :key="item._id" @click="goPreview">					
+						<image :src="item.smallPicurl" mode="aspectFill"></image>					
 					</view>
 				</scroll-view>
 			</view>
@@ -77,6 +71,52 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const bannerList= ref([]);
+const randomList = ref([]);
+const noticeList = ref([])
+
+const getBanner = async ()=>{
+	let res =await uni.request({
+		url:"https://tea.qingnian8.com/api/bizhi/homeBanner",
+		header:{
+			"access-key":"xxm123321@#"
+		}
+	})
+	if(res.data.errCode===0){
+		bannerList.value = res.data.data
+	}
+}
+
+const getDayRandom = async ()=>{
+	let res =await uni.request({
+		url:"https://tea.qingnian8.com/api/bizhi/randomWall",
+		header:{
+			"access-key":"xxm123321@#"
+		}
+	})
+	if(res.data.errCode===0){
+		randomList.value = res.data.data
+	}
+	
+}
+
+const getNotice = async()=>{
+	let res =await uni.request({
+		url:"https://tea.qingnian8.com/api/bizhi/wallNewsList",
+		header:{
+			"access-key":"xxm123321@#"
+		},
+		data:{
+			select:true
+		}
+	})
+	if(res.data.errCode===0){
+		noticeList.value = res.data.data
+	}	
+}
+
 
 
 
@@ -89,6 +129,10 @@ const goPreview = ()=>{
 	})
 }
 
+
+getBanner();
+getDayRandom();
+getNotice();
 </script>
 
 <style lang="scss" scoped>
