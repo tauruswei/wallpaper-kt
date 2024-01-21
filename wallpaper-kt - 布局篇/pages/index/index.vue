@@ -79,10 +79,6 @@
 <script setup>
 
 
-
-
-
-//跳转到预览页面
 const goPreview = ()=>{
 	uni.navigateTo({
 		url:"/pages/preview/preview"
