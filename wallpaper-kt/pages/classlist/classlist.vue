@@ -1,14 +1,57 @@
 <template>
 	<view class="classlist">
 		<view class="content">
-			<navigator url="/pages/preview/preview" class="item" v-for="item in 10">
-				<image src="../../common/images/preview2.jpg" mode="aspectFill"></image>
+			<navigator url="/pages/preview/preview" class="item" 
+			v-for="item in classList"
+			:key="item._id"
+			>
+				<image :src="item.smallPicurl" mode="aspectFill"></image>
 			</navigator>
 		</view>
 	</view>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import {onLoad,onReachBottom} from "@dcloudio/uni-app"
+import {apiGetClassList} from "@/api/apis.js"
+//分类列表数据
+const classList = ref([]);
+const noData = ref(false)
+
+//定义data参数
+const queryParams = {
+	pageNum:1,
+	pageSize:12
+}
+
+onLoad((e)=>{	
+	let {id=null,name=null} = e;
+	queryParams.classid = id;
+	console.log(id,name);
+	//修改导航标题
+	uni.setNavigationBarTitle({
+		title:name
+	})
+	//执行获取分类列表方法
+	getClassList();
+})
+
+onReachBottom(()=>{
+	if(noData.value) return;
+	queryParams.pageNum++;
+	getClassList();
+})
+
+//获取分类列表网络数据
+const getClassList = async ()=>{
+	let res = await apiGetClassList(queryParams);
+	classList.value = [...classList.value , ...res.data];
+	if(queryParams.pageSize > res.data.length) noData.value = true; 
+	console.log(res.data);	
+}
+
+
 
 </script>
 

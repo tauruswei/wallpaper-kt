@@ -59,7 +59,10 @@
 			</common-title>
 			
 			<view class="content">
-				<theme-item v-for="item in 8"></theme-item>
+				<theme-item v-for="item in classifyList" 
+				:key="item._id"
+				:item="item"
+				></theme-item>
 				<theme-item :isMore="true"></theme-item>
 			</view>
 			
@@ -72,35 +75,34 @@
 
 <script setup>
 import { ref } from 'vue';
-import {apiGetBanner,apiGetDayRandom} from "@/api/apis.js"
+import {apiGetBanner,apiGetDayRandom,apiGetNotice,apiGetClassify} from "@/api/apis.js"
 
 const bannerList= ref([]);
 const randomList = ref([]);
-const noticeList = ref([])
+const noticeList = ref([]);
+const classifyList = ref([]);
 
 const getBanner = async ()=>{
-	let res =await apiGetBanner();
-	bannerList.value = res.data.data;	
+	let res =await apiGetBanner();	
+	bannerList.value = res.data;	
 }
 
 const getDayRandom = async ()=>{
 	let res =await apiGetDayRandom();
-	randomList.value = res.data.data	
+	randomList.value = res.data	
 }
 
 const getNotice = async()=>{
-	let res =await uni.request({
-		url:"https://tea.qingnian8.com/api/bizhi/wallNewsList",
-		header:{
-			"access-key":"xxm123321@#"
-		},
-		data:{
-			select:true
-		}
-	})
-	if(res.data.errCode===0){
-		noticeList.value = res.data.data
-	}	
+	let res =await apiGetNotice({select:true});
+	noticeList.value = res.data
+}
+
+const getClassify =async()=>{
+	let res =await apiGetClassify({
+		select:true
+	});
+	classifyList.value = res.data
+	console.log(res);
 }
 
 
@@ -119,6 +121,7 @@ const goPreview = ()=>{
 getBanner();
 getDayRandom();
 getNotice();
+getClassify();
 </script>
 
 <style lang="scss" scoped>
