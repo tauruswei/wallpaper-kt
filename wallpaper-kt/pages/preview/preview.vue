@@ -1,8 +1,8 @@
 <template>
 	<view class="preview">
-		<swiper circular>
-			<swiper-item v-for="item in 5">
-				<image @click="maskChange" src="../../common/images/preview1.jpg" mode="aspectFill"></image>
+		<swiper circular :current="currentIndex" @change="swiperChange">
+			<swiper-item v-for="item in classList" :key="item._id">
+				<image @click="maskChange" :src="item.picurl" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
 		
@@ -11,7 +11,7 @@
 			:style="{top:getStatusBarHeight()+'px'}">
 				<uni-icons type="back" color="#fff" size="20"></uni-icons>
 			</view>
-			<view class="count">3 / 9</view>
+			<view class="count">{{currentIndex+1}} / {{classList.length}}</view>
 			<view class="time">
 				<uni-dateformat :date="new Date()" format="hh:mm"></uni-dateformat>
 			</view>
@@ -119,14 +119,41 @@
 
 <script setup>
 import { ref } from 'vue';
+import {onLoad} from "@dcloudio/uni-app"
 import {getStatusBarHeight} from "@/utils/system.js"
 const maskState =ref(true);
 const infoPopup = ref(null);
 const scorePopup = ref(null);
 const userScore =ref(0)
+const classList =ref([]);
+const currentId = ref(null);
+const currentIndex = ref(0)
+
+const storgClassList = uni.getStorageSync("storgClassList") || [];
+classList.value = storgClassList.map(item=>{
+	return {
+		...item,
+		picurl:item.smallPicurl.replace("_small.webp",".jpg")
+	}
+})
 
 
 
+onLoad((e)=>{
+	currentId.value = e.id;
+	currentIndex.value = classList.value.findIndex(item=>item._id == currentId.value)
+	
+})
+
+
+const swiperChange = (e)=>{
+	currentIndex.value = e.detail.current;
+	console.log(e);
+}
+
+
+
+console.log(classList.value);
 
 //点击info弹窗
 const clickInfo = ()=>{
