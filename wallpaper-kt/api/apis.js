@@ -41,3 +41,12 @@ export function apiGetSetupScore(data={}){
 		data
 	})
 }
+
+
+export function apiWriteDownload(data={}){
+	return request({
+		url:"/downloadWall",
+		data
+	})
+}
+
