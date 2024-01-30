@@ -43,7 +43,8 @@
 			</common-title>
 			<view class="content">
 				<scroll-view scroll-x>
-					<view class="box" v-for="item in randomList" :key="item._id" @click="goPreview">					
+					<view class="box" v-for="item in randomList" :key="item._id" 
+					@click="goPreview(item._id)">					
 						<image :src="item.smallPicurl" mode="aspectFill"></image>					
 					</view>
 				</scroll-view>
@@ -75,6 +76,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import {onShareAppMessage,onShareTimeline} from "@dcloudio/uni-app"
 import {apiGetBanner,apiGetDayRandom,apiGetNotice,apiGetClassify} from "@/api/apis.js"
 
 const bannerList= ref([]);
@@ -111,11 +113,28 @@ const getClassify =async()=>{
 
 
 //跳转到预览页面
-const goPreview = ()=>{
+const goPreview = (id)=>{
+	uni.setStorageSync("storgClassList",randomList.value);
 	uni.navigateTo({
-		url:"/pages/preview/preview"
-	})
+		url:"/pages/preview/preview?id="+id
+	})	
 }
+
+
+//分享给好友
+onShareAppMessage((e)=>{
+	return {
+		title:"咸虾米壁纸，好看的手机壁纸",
+		path:"/pages/classify/classify"
+	}
+})
+
+//分享朋友圈
+onShareTimeline(()=>{
+	return {
+		title:"咸虾米壁纸，好看的手机壁纸"
+	}
+})
 
 
 getBanner();

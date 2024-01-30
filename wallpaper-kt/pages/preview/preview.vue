@@ -1,5 +1,5 @@
 <template>
-	<view class="preview">
+	<view class="preview" v-if="currentInfo">
 		<swiper circular :current="currentIndex" @change="swiperChange">
 			<swiper-item v-for="(item,index) in classList" :key="item._id">
 				<image v-if="readImgs.includes(index)" @click="maskChange" :src="item.picurl" mode="aspectFill"></image>
@@ -18,7 +18,7 @@
 			<view class="date">
 				<uni-dateformat :date="new Date()" format="MM月dd日"></uni-dateformat>
 			</view>
-			<view class="footer" v-if="currentInfo">
+			<view class="footer">
 				<view class="box" @click="clickInfo">
 					<uni-icons type="info" size="28"></uni-icons>
 					<view class="text">信息</view>
@@ -46,7 +46,7 @@
 					</view>
 				</view>
 				<scroll-view scroll-y>
-					<view class="content" v-if="currentInfo">
+					<view class="content">
 						<view class="row">
 							<view class="label">壁纸ID：</view>
 							<text selectable class="value">{{currentInfo._id}}</text>
@@ -90,6 +90,8 @@
 							声明：本图片来用户投稿，非商业使用，用于免费学习交流，如侵犯了您的权益，您可以拷贝壁纸ID举报至平台，邮箱513894357@qq.com，管理将删除侵权壁纸，维护您的权益。
 
 						</view>
+						
+						<view class="safe-area-inset-bottom"></view>
 					</view>
 				</scroll-view>
 			</view>
@@ -126,14 +128,15 @@
 		ref
 	} from 'vue';
 	import {
-		onLoad
+		onLoad,onShareAppMessage,onShareTimeline
 	} from "@dcloudio/uni-app"
 	import {
 		getStatusBarHeight
 	} from "@/utils/system.js"
 	import {
 		apiGetSetupScore,
-		apiWriteDownload
+		apiWriteDownload,
+		apiDetailWall
 	} from "@/api/apis.js"
 	const maskState = ref(true);
 	const infoPopup = ref(null);
@@ -157,8 +160,17 @@
 
 
 
-	onLoad((e) => {
+	onLoad(async (e) => {
 		currentId.value = e.id;
+		if(e.type == 'share'){
+			let res = await apiDetailWall({id:currentId.value});
+			classList.value = res.data.map(item=>{
+				return {
+					...item,
+					picurl: item.smallPicurl.replace("_small.webp", ".jpg")
+				}
+			})
+		}
 		currentIndex.value = classList.value.findIndex(item => item._id == currentId.value)
 		currentInfo.value = classList.value[currentIndex.value]
 		readImgsFun();
@@ -236,7 +248,16 @@
 
 	//返回上一页
 	const goBack = () => {
-		uni.navigateBack()
+		uni.navigateBack({
+			success: () => {
+				
+			},
+			fail: (err) => {
+				uni.reLaunch({
+					url:"/pages/index/index"
+				})
+			}
+		})
 	}
 
 
@@ -328,6 +349,26 @@
 		}
 		// #endif
 	}
+
+
+
+
+//分享给好友
+onShareAppMessage((e)=>{
+	return {
+		title:"咸虾米壁纸",
+		path:"/pages/preview/preview?id="+currentId.value+"&type=share"
+	}
+})
+
+
+//分享朋友圈
+onShareTimeline(()=>{
+	return {
+		title:"咸虾米壁纸",
+		query:"id="+currentId.value+"&type=share"
+	}
+})
 
 
 

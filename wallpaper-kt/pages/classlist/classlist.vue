@@ -24,8 +24,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import {onLoad,onReachBottom} from "@dcloudio/uni-app"
+import {onLoad,onUnload,onReachBottom,onShareAppMessage,onShareTimeline} from "@dcloudio/uni-app"
+
 import {apiGetClassList} from "@/api/apis.js"
+import {gotoHome} from "@/utils/common.js"
 //分类列表数据
 const classList = ref([]);
 const noData = ref(false)
@@ -35,11 +37,13 @@ const queryParams = {
 	pageNum:1,
 	pageSize:12
 }
+let pageName;
 
 onLoad((e)=>{	
 	let {id=null,name=null} = e;
+	if(!id) gotoHome();
 	queryParams.classid = id;
-	console.log(id,name);
+	pageName = name	
 	//修改导航标题
 	uni.setNavigationBarTitle({
 		title:name
@@ -64,6 +68,26 @@ const getClassList = async ()=>{
 }
 
 
+//分享给好友
+onShareAppMessage((e)=>{
+	return {
+		title:"咸虾米壁纸-"+pageName,
+		path:"/pages/classlist/classlist?id="+queryParams.classid+"&name="+pageName
+	}
+})
+
+
+//分享朋友圈
+onShareTimeline(()=>{
+	return {
+		title:"咸虾米壁纸-"+pageName,
+		query:"id="+queryParams.classid+"&name="+pageName
+	}
+})
+
+onUnload(()=>{
+	uni.removeStorageSync("storgClassList")
+})
 
 </script>
 
