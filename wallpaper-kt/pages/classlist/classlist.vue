@@ -26,7 +26,7 @@
 import { ref } from 'vue';
 import {onLoad,onUnload,onReachBottom,onShareAppMessage,onShareTimeline} from "@dcloudio/uni-app"
 
-import {apiGetClassList} from "@/api/apis.js"
+import {apiGetClassList,apiGetHistoryList} from "@/api/apis.js"
 import {gotoHome} from "@/utils/common.js"
 //分类列表数据
 const classList = ref([]);
@@ -40,9 +40,10 @@ const queryParams = {
 let pageName;
 
 onLoad((e)=>{	
-	let {id=null,name=null} = e;
-	if(!id) gotoHome();
-	queryParams.classid = id;
+	let {id=null,name=null,type=null} = e;
+	if(type) queryParams.type = type;
+	if(id) queryParams.classid = id;	
+	
 	pageName = name	
 	//修改导航标题
 	uni.setNavigationBarTitle({
@@ -60,7 +61,10 @@ onReachBottom(()=>{
 
 //获取分类列表网络数据
 const getClassList = async ()=>{
-	let res = await apiGetClassList(queryParams);
+	let res;
+	if(queryParams.classid) res = await apiGetClassList(queryParams);
+	if(queryParams.type) res = await apiGetHistoryList(queryParams);
+	
 	classList.value = [...classList.value , ...res.data];
 	if(queryParams.pageSize > res.data.length) noData.value = true; 
 	uni.setStorageSync("storgClassList",classList.value);	

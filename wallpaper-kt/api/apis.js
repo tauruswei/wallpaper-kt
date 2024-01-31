@@ -58,3 +58,28 @@ export function apiDetailWall(data={}){
 		data
 	})
 }
+
+
+export function apiUserInfo(data={}){
+	return request({
+		url:"/userInfo",
+		data
+	})
+}
+
+
+export function apiGetHistoryList(data={}){
+	return request({
+		url:"/userWallList",
+		data
+	})
+}
+
+
+
+export function apiNoticeDetail(data={}){
+	return request({
+		url:"/wallNewsDetail",
+		data
+	})
+}
