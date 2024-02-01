@@ -12,8 +12,8 @@
 		</view>
 		
 		
-		<view>
-			<view class="history">
+		<view v-if="!classList.length || noSearch">
+			<view class="history"  v-if="historySearch.length">
 				<view class="topTitle">
 					<view class="text">最近搜索</view>
 					<view class="icon" @click="removeHistory">
@@ -21,7 +21,8 @@
 					</view>
 				</view>
 				<view class="tabs">
-					<view class="tab" v-for="tab in historySearch" :key="tab" @click="clickTab(tab)">{{tab}}</view>		
+					<view class="tab" v-for="tab in historySearch" :key="tab" 
+					@click="clickTab(tab)">{{tab}}</view>		
 				</view>
 			</view>
 			
@@ -30,25 +31,28 @@
 					<view class="text">热门搜索</view>				
 				</view>
 				<view class="tabs">				
-					<view class="tab" v-for="tab in recommendList" :key="tab" @click="clickTab(tab)">{{tab}}</view>
+					<view class="tab" v-for="tab in recommendList" :key="tab" 
+					@click="clickTab(tab)">{{tab}}</view>
 				</view>
 			</view>
 		</view>
 		
 		
-		<view class="noSearch">
+		<view class="noSearch" v-if="noSearch">
 			<uv-empty mode="search" icon="http://cdn.uviewui.com/uview/empty/search.png"></uv-empty>
 		</view>
 		
 		
-		<view>
+		<view v-else>
 			<view class="list">
-				<navigator :url="`/pages/preview/preview`"  class="item" 
+				<navigator :url="`/pages/preview/preview?id=${item._id}`"  class="item" 
 				v-for="item in classList" :key="item._id">				
 					<image :src="item.smallPicurl" mode="aspectFill"></image>				
 				</navigator>
 			</view>		
-			<view v-if="noData || classList.length"><uni-load-more :status="noData?'noMore':'loading'"/></view>
+			<view class="loadingLayout" v-if="noData || classList.length">
+				<uni-load-more :status="noData?'noMore':'loading'"/>
+			</view>
 		</view>
 		
 		
@@ -58,7 +62,7 @@
 <script setup>
 import {ref} from "vue";
 import {onLoad,onUnload,onReachBottom} from "@dcloudio/uni-app";
-
+import {apiSearchData} from "@/api/apis.js"
 //查询参数
 const queryParams = ref({	
 	pageNum:1,
@@ -67,7 +71,7 @@ const queryParams = ref({
 })
 
 //搜索历史词
-const historySearch = ref(['搜索词1','搜索词2','搜索词3','搜索词4']);
+const historySearch = ref(uni.getStorageSync("historySearch") || []);
 
 //热门搜索词
 const recommendList = ref(["美女","帅哥","宠物","卡通"]);
@@ -78,26 +82,29 @@ const noData = ref(false);
 const noSearch = ref(false);
 
 //搜索结果列表
-const classList = ref([
-	{_id:123123,smallPicurl:'https://mp-0cb878b7-99ec-44ea-8246-12b123304b05.cdn.bspapp.com/xxmBizhi/20231102/1698905562410_0_small.webp'}
-]);
+const classList = ref([]);
 
 
 //点击搜索
 const onSearch = ()=>{
-	
+	historySearch.value = [...new Set([queryParams.value.keyword,...historySearch.value])]
+	uni.setStorageSync("historySearch",historySearch.value);
+	searchData();
+	console.log(queryParams.value.keyword);
 }
 
 //点击清除按钮
 const onClear = ()=>{
-	
+	initParams();
 }
 
 
 
 //点击标签进行搜索
 const clickTab = (value)=>{
-	
+	initParams();
+	queryParams.value.keyword = value;
+	onSearch();
 }
 
 
@@ -107,20 +114,44 @@ const removeHistory = ()=>{
 		title:"是否清空历史搜索？",
 		success:res=>{
 			if(res.confirm){
-				console.log("确认删除");			
+				uni.removeStorageSync("historySearch");
+				historySearch.value = []
 			}
 		}
 	})
 }
 
+const searchData = async ()=>{
+	let res =  await apiSearchData(queryParams.value);
+	classList.value  =  [...classList.value,...res.data] ;
+	uni.setStorageSync("storgClassList",classList.value);	
+	if(queryParams.value.pageSize > res.data.length) noData.value = true;
+	if(res.data.length == 0 && classList.value.length==0) noSearch.value = true;
+	console.log(res);
+}
+
+const initParams = ()=>{
+	classList.value = [];
+	noData.value = false;
+	noSearch.value = false;
+	queryParams.value = {
+		pageNum:1,
+		pageSize:12,
+		keyword:""
+	}
+}
+
+
 //触底加载更多
 onReachBottom(()=>{
-	
+	if(noData.value) return;
+	queryParams.value.pageNum++
+	searchData();
 })
 
 //关闭有页面
 onUnload(()=>{
-	
+	uni.removeStorageSync("storgClassList",classList.value);	
 })
 
 

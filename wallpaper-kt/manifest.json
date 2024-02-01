@@ -1,5 +1,5 @@
 {
-    "name" : "wallpaper-kt",
+    "name" : "咸虾米壁纸",
     "appid" : "__UNI__B8FCDB7",
     "description" : "",
     "versionName" : "1.0.0",
@@ -52,7 +52,8 @@
     "mp-weixin" : {
         "appid" : "wx511abe7a13783591",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "usingComponents" : true
     },
