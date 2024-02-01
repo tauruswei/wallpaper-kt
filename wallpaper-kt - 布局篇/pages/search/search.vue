@@ -93,6 +93,14 @@ const onClear = ()=>{
 	
 }
 
+
+
+//点击标签进行搜索
+const clickTab = (value)=>{
+	queryParams.value.keyword = value;	
+}
+
+
 //点击清空搜索记录
 const removeHistory = ()=>{
 	uni.showModal({
