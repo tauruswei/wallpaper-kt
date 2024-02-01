@@ -48,7 +48,7 @@
 					<image :src="item.smallPicurl" mode="aspectFill"></image>				
 				</navigator>
 			</view>		
-			<view class="pageLoading" v-if="noData || classList.length"><uni-load-more :status="noData?'noMore':'loading'"/></view>
+			<view v-if="noData || classList.length"><uni-load-more :status="noData?'noMore':'loading'"/></view>
 		</view>
 		
 		
