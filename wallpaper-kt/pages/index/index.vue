@@ -1,6 +1,10 @@
 <template>
 	<view class="homeLayout pageBg">
+		<!-- #ifndef MP-TOUTIAO -->
 		<custom-nav-bar title="推荐"></custom-nav-bar>
+		<!-- #endif -->
+		
+		
 		<view class="banner">
 			<swiper circular indicator-dots indicator-color="rgba(255,255,255,0.5)" 
 			indicator-active-color="#fff" autoplay>

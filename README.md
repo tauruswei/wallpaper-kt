@@ -284,11 +284,15 @@ NBA球员榜：https://tiyu.baidu.com/api/match/playerranking/match/NBA/tabId/60
 
 ##### 10.1.打包发行微信小程序的上线全流程
 
-注册地址：[mp.weixin.qq.com]()
+注册地址：https://mp.weixin.qq.com/
 
-##### 10.2.打包抖音小程序
+##### 10.2.打包抖音小程序条件编译抖音专属代码
 
+开发平台地址：https://developer.open-douyin.com/
 
+##### 10.3.打包H5并发布上线到unicloud的前端网页托管
+
+拓展阅读：[uniCloud服务空间前端网页托管绑定自定义配置网站域名](https://blog.csdn.net/qq_18798149/article/details/129860824)
 
 ##  学习交流群
 

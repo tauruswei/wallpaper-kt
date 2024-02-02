@@ -1,6 +1,9 @@
 <template>
 	<view class="classLayout pageBg">
+		<!-- #ifndef MP-TOUTIAO -->
 		<custom-nav-bar title="分类"></custom-nav-bar>
+		<!-- #endif -->
+		
 		<view class="classify">
 			<theme-item v-for="item in classifyList" 
 			:key="item._id"

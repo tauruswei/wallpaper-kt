@@ -8,9 +8,13 @@
 
 
 		<view class="mask" v-if="maskState">
+			<!-- #ifndef MP-TOUTIAO -->
 			<view class="goBack" @click="goBack" :style="{top:getStatusBarHeight()+'px'}">
 				<uni-icons type="back" color="#fff" size="20"></uni-icons>
 			</view>
+			<!-- #endif -->
+			
+			
 			<view class="count">{{currentIndex+1}} / {{classList.length}}</view>
 			<view class="time">
 				<uni-dateformat :date="new Date()" format="hh:mm"></uni-dateformat>
@@ -584,6 +588,7 @@ onShareTimeline(()=>{
 					width: 80rpx;
 					line-height: 1em;
 					text-align: right;
+					font-size: 28rpx;
 				}
 			}
 
