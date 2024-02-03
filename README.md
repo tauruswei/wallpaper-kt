@@ -294,6 +294,10 @@ NBA球员榜：https://tiyu.baidu.com/api/match/playerranking/match/NBA/tabId/60
 
 拓展阅读：[uniCloud服务空间前端网页托管绑定自定义配置网站域名](https://blog.csdn.net/qq_18798149/article/details/129860824)
 
+##### 10.4.打包安卓APP并安装运行
+
+##### 10.5.【完结撒花】项目总结和知识拓展
+
 ##  学习交流群
 
 咸虾米QQ群：247369155

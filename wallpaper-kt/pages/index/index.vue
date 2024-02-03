@@ -5,6 +5,7 @@
 		<!-- #endif -->
 		
 		
+		
 		<view class="banner">
 			<swiper circular indicator-dots indicator-color="rgba(255,255,255,0.5)" 
 			indicator-active-color="#fff" autoplay>
