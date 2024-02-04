@@ -86,9 +86,13 @@ const classList = ref([]);
 
 
 //点击搜索
-const onSearch = ()=>{
-	historySearch.value = [...new Set([queryParams.value.keyword,...historySearch.value])]
+const onSearch = ()=>{	
+	uni.showLoading()
+	historySearch.value = 
+	[...new Set([queryParams.value.keyword,...historySearch.value])].slice(0,10);
+	
 	uni.setStorageSync("historySearch",historySearch.value);
+	initParams(queryParams.value.keyword);
 	searchData();
 	console.log(queryParams.value.keyword);
 }
@@ -102,8 +106,8 @@ const onClear = ()=>{
 
 //点击标签进行搜索
 const clickTab = (value)=>{
-	initParams();
-	queryParams.value.keyword = value;
+	initParams(value);
+	
 	onSearch();
 }
 
@@ -122,22 +126,27 @@ const removeHistory = ()=>{
 }
 
 const searchData = async ()=>{
-	let res =  await apiSearchData(queryParams.value);
-	classList.value  =  [...classList.value,...res.data] ;
-	uni.setStorageSync("storgClassList",classList.value);	
-	if(queryParams.value.pageSize > res.data.length) noData.value = true;
-	if(res.data.length == 0 && classList.value.length==0) noSearch.value = true;
-	console.log(res);
+	try{
+		let res =  await apiSearchData(queryParams.value);
+		classList.value  =  [...classList.value,...res.data] ;
+		uni.setStorageSync("storgClassList",classList.value);	
+		if(queryParams.value.pageSize > res.data.length) noData.value = true;
+		if(res.data.length == 0 && classList.value.length==0) noSearch.value = true;
+		console.log(res);
+	}finally{
+		uni.hideLoading()
+	}
+	
 }
 
-const initParams = ()=>{
+const initParams = (value='')=>{
 	classList.value = [];
 	noData.value = false;
 	noSearch.value = false;
 	queryParams.value = {
 		pageNum:1,
 		pageSize:12,
-		keyword:""
+		keyword:value || ""
 	}
 }
 
